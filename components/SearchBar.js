@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginBottom: 10,
         color: 'white',
+        marginTop: 20,
     },
     shadowProp: {
         backgroundColor: '#fff',

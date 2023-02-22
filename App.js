@@ -32,8 +32,8 @@ export default function App() {
       <View style={styles.container}>
       <StatusBar hidden={true}/>
 
-        {/* <Home/> */}
-        <Detail />
+        <Home/>
+        {/* <Detail /> */}
       </View>
   );
 }
