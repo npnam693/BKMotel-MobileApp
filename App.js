@@ -1,9 +1,15 @@
 import { ScrollView, StyleSheet, Text, View, Image, StatusBar} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 import Home from './screens/Home';
 import Detail from './screens/Detail';
+
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
@@ -29,12 +35,18 @@ export default function App() {
   return (
     //   <Text style = {{fontSize: 32, color: '#1488db', fontWeight: '900'}}>BK<Text style = {{fontSize: 32, color: '#00a699', fontWeight: '700'}}>MOTEL</Text></Text>
     // </View>
-      <View style={styles.container}>
-      <StatusBar hidden={true}/>
+      // <View style={styles.container}>
+      // <StatusBar hidden={true}/>
 
-        <Home/>
-        {/* <Detail /> */}
-      </View>
+      //   <Home/>
+      //   {/* <Detail /> */}
+      // </View>
+      <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Detail" component={Detail} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

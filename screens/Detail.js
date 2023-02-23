@@ -3,6 +3,8 @@ import { AirbnbRating } from '@rneui/themed';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { useState } from 'react';
 import axios from 'axios'
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;

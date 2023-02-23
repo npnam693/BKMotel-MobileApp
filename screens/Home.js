@@ -1,11 +1,11 @@
-import { ScrollView, StyleSheet, Text, View, Image, StatusBar} from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image, StatusBar, TouchableOpacity} from 'react-native';
 import React, { useState, useEffect } from 'react';
 
 import RoomItem from '../components/RoomItem';
 import SearchBar from '../components/SearchBar';
 import axios from 'axios'
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [data, setData] = useState([]);
   
   useEffect(() => {
@@ -30,14 +30,13 @@ export default function Home() {
       <ScrollView >
         {
           data.map((room, i) => {
-            if (room !== undefined) return <RoomItem key = {i} data = {room}/>
+            if (room !== undefined) return (
+              <TouchableOpacity key = {i} onPress = {() => navigation.navigate('Detail')}>
+                <RoomItem data = {room}/>
+              </TouchableOpacity>
+            )
           })
         }
-        <RoomItem/>
-        <RoomItem/>
-        <RoomItem/>
-        <RoomItem/>
-        <RoomItem/>
       </ScrollView>
     </View>
   );
@@ -46,7 +45,6 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
