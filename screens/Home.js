@@ -31,7 +31,7 @@ export default function Home({ navigation }) {
         {
           data.map((room, i) => {
             if (room !== undefined) return (
-              <TouchableOpacity key = {i} onPress = {() => navigation.navigate('Detail')}>
+              <TouchableOpacity key = {i} onPress = {() => navigation.navigate('Detail', {data : room})}>
                 <RoomItem data = {room}/>
               </TouchableOpacity>
             )

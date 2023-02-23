@@ -10,35 +10,58 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 import RoomItem from '../components/RoomItem'
-const fakeImg = [
-    'https://i1-dulich.vnecdn.net/2021/08/09/4-2190-1628506128.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=9dx56HZNIXnExqtLJSL_UA',
-    'https://cdn.tcdulichtphcm.vn/upload/2-2022/images/2022-06-11/1654920508-362682679.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqB2PWkODiLDub7gzUta-1h7H3NPuodTbTsaXGgFKr8cUHtqzQFmSWk3ovqJofa0NuhaY&usqp=CAU',
-]
-export default function Detail(){
-    const [imgPreview, setImgPreview] = useState(fakeImg[0])
+
+const formatNameAddress = (name) =>{
+    if (name.substring(0, 9) === 'Thành phố') 
+        return name.substring(10)
+    if (name.substring(0, 4) === 'Tỉnh') 
+        return name.substring(5)
+    return name
+}
+
+const vndFormat = (money) => {
+    money = money.toString()
+    let newMoney = money
+    let index = 0
+    for (let i = money.length - 1; i >= 0; i--){
+        if (index === 2) {
+            newMoney = newMoney.substring(0, i) + '.' +  newMoney.substring(i, newMoney.length)
+            index = 0
+        }
+        else index = index + 1
+    }
+    return newMoney
+}
+
+
+
+
+export default function Detail({ route, navigation }){
+    const data = route.params.data
+    const [imgPreview, setImgPreview] = useState(data.image[0])
+    // console.log(data.image)
     return (
         <View>
             <ScrollView>
             <View  style = {styles.imageContainer}>
                 <Image source = {{ uri: imgPreview}}
                     style={{width: '100%', height: 400, position: 'relative', 
-                        borderRadius: 16}} 
+                        borderBottomLeftRadius: 16, borderBottomRightRadius: 16}} 
                 />
                 <View style = {styles.quickInfo}>
                     <View style = {[styles.flexRow, {marginBottom: 8}]}>
-                        <Text style = {{fontSize: 16, fontFamily: 'Inter-Medium', color: '#757d86'}}>Quận Ba Đình,Thành phố Hà Nội</Text>
-                        <Text style = {{fontSize: 14, fontFamily: 'Inter-Medium', color: 'black'}}>50m2</Text>
+                        <Text style = {{fontSize: 16, fontFamily: 'Inter-Medium', color: '#757d86'}}>{formatNameAddress(data.district)}, {formatNameAddress(data.province)}</Text>
+                        <Text style = {{fontSize: 14, fontFamily: 'Inter-Medium', color: 'black'}}>{data.area}m2</Text>
                     </View>
                     
                     <View style = {styles.flexRow}>
-                        <Text style = {{fontSize: 14, fontFamily: 'Inter-Medium', color: '#1488db'}}>₫ 24.000.000</Text>
+                        <Text style = {{fontSize: 14, fontFamily: 'Inter-Medium', color: '#1488db'}}>₫ {vndFormat(data.price)}/tháng </Text>
                         <View style = {styles.flexRow}>
-                            <AirbnbRating  isDisabled={true} selectedColor = '#00a699' showRating={false} size = {15} defaultRating ={4.5}/>
+                            <AirbnbRating  isDisabled={true} selectedColor = '#00a699' showRating={false} size = {15} defaultRating ={data.ratingPoint.$numberDecimal}/>
                             <Text 
                                 style = {{fontSize: 14, fontFamily: 'Inter-Medium', 
                                             color: 'black', marginLeft:4}}
-                            >4.5</Text>
+                            >{(data.ratingPoint != null) ? data.ratingPoint.$numberDecimal : 0  }</Text>
                         </View>    
                     </View>
                 </View>
@@ -50,21 +73,14 @@ export default function Detail(){
                     color:'#333'
                 }}>Preview</Text>
                 <View style = {[styles.flexRow, {justifyContent: 'flex-start'}]}>
-                    <TouchableOpacity onPress={() => setImgPreview(fakeImg[0])} >
-                        <Image source = {{uri: fakeImg[0]}}
-                            style={styles.imgPreview} 
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setImgPreview(fakeImg[1])} >
-                        <Image source = {{uri: fakeImg[1]}}
-                            style={styles.imgPreview} 
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setImgPreview(fakeImg[2])} >
-                        <Image source = {{uri: fakeImg[2]}}
-                            style={styles.imgPreview} 
-                        />
-                    </TouchableOpacity>
+                    {data.image.map((img,i) => { return (
+                        <TouchableOpacity key = {i} onPress={() => setImgPreview(img)} >
+                            <Image source = {{uri: img}}
+                                style={styles.imgPreview} 
+                            />
+                        </TouchableOpacity>
+                    )
+                    })}
                 </View>
             </View>
 
