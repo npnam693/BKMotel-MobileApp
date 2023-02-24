@@ -28,9 +28,9 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         border: '1px solid',
         borderRadius: 20,
-        marginBottom: 10,
+        // marginBottom: 10,
         color: 'white',
-        marginTop: 20,
+        marginTop: 30,
     },
     shadowProp: {
         backgroundColor: 'white',
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        
     },
     options: {
         display: 'flex',

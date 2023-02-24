@@ -6,7 +6,8 @@ import IconOcticons from 'react-native-vector-icons/Octicons';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-const formatNameAddress = (name) =>{
+
+export const formatNameAddress = (name) =>{
     if (name.substring(0, 9) === 'Thành phố') 
         return name.substring(10)
     if (name.substring(0, 4) === 'Tỉnh') 
@@ -14,65 +15,97 @@ const formatNameAddress = (name) =>{
     return name
 }
 
+export const vndFormat = (money) => {
+    money = money.toString()
+    let newMoney = money
+    let index = 0
+    for (let i = money.length - 1; i >= 0; i--){
+        if (index === 2) {
+            newMoney = newMoney.substring(0, i) + '.' +  newMoney.substring(i, newMoney.length)
+            index = 0
+        }
+        else index = index + 1
+    }
+    return newMoney
+}
+
+
 export default function RoomItem({data}){
     if (data != undefined) 
         return (
-            <View style = {{marginBottom: 18}}>
+            <View style = {{marginBottom: 10, marginTop: 10}}>
                 <Image source = {{ uri: data.image[0]}}
                     style={{width: 352, height: 352, borderRadius: 20, alignItems:'center', justifyContent: 'center', position: 'relative',}} 
                 />
-                <View style ={{position:'absolute', right: 15, top: 15}}>
-                    <Icon name='heart-o' size = {24} color = 'white'/>
+                <View style ={{position:'absolute', right: 15, top: 15, opacity: 0.15, borderColor: 'white'}}>
+                    <Icon name='heart' size = {24} color = 'black' borderColor= 'white'/>
                 </View>
+                <View style = {styles.point}>
+                    <Text style = {[styles.fontSize12,{top: -1}]}>{(data.ratingPoint != null) ? data.ratingPoint.$numberDecimal : 0  }</Text> 
+                    <Icon name = 'star' size = {14}  color = '#00a699' />
+                </View> 
                 <View style = {{ margin: 20, marginBottom: 0, marginTop: 4}}>    
                     <View style = {styles.header}>
                         <Text style = {styles.locationP}>{formatNameAddress(data.district)}, {formatNameAddress(data.province)}</Text>
-                        <View style = {styles.point}>
-                            <Text style = {styles.fontSize12}>{(data.ratingPoint != null) ? data.ratingPoint.$numberDecimal : 0  }</Text> 
-                            <Icon name = 'star' size = {14}  color = '#00a699' />
-                        </View> 
+                        <Text style = {styles.titleRoom}>{data.title}</Text>
                     </View>
-                    <View style = {styles.rowComponent}>
-                        <View style = {{width: 24}}><Icon name = 'money' size = {16}/></View>
-                        <Text style = {styles.fontSize12}>{data.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})} /tháng </Text>
-                    </View>
-                    <View style = {styles.rowComponent}>
-                        <View style = {{width: 24}}><IconOcticons name = 'home' size = {16}/></View>
-                        <Text style = {styles.fontSize12}>{data.area}m2</Text>
+                    <View style = {[styles.rowComponent,{justifyContent:'space-between'}]}>
+                        <View style = {styles.rowComponent}>
+                            <View style = {{width: 17, top: 1}}><Icon name = 'money' size = {16}/></View>
+                            <Text style = {styles.fontSize12}>{vndFormat(data.price)} / tháng </Text>
+                        </View>
+                        <View style = {styles.rowComponent}>
+                            <View style = {{width: 15, top: 1}}><IconOcticons name = 'home' size = {15}/></View>
+                            <Text style = {styles.fontSize12}>{data.area}m2</Text>
+                        </View>
+
                     </View>
                 </View>
             </View>
         )
 }
-
 const styles = StyleSheet.create({
     header: {
         width: 352 - 40,
         display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
         justifyContent: 'space-between',
     },
     rowComponent: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        height: 20,
+        justifyContent: 'center',
     },
     locationP: {
-        fontSize: 16,
+        fontSize: 14,
         fontFamily:'Inter-SemiBold',
+        color: '#1F1F1F'
     },
     point: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: 42
+        position: 'absolute',
+        backgroundColor: 'white',
+        margin: 15,
+        padding: 4,
+        paddingRight: 8,
+        borderRadius: 6
     },
     fontSize12: {
-        fontSize: 14,
+        fontSize: 16,
         marginHorizontal: 6,
-        fontFamily:'Inter-Medium',
+        fontFamily:'JosefinSans-Regular',
+        color: '#707070'
+    },
+    titleRoom: {
+        fontSize: 16,
+        fontFamily:'JosefinSans-Regular',
+        color: '#707070'
     },
   });
   

@@ -17,6 +17,9 @@ export default function App() {
     const loadFont = async () => {
       await Font.loadAsync({
         'JosefinSans-Medium': require('./assets/fonts/JosefinSans-Medium.ttf'),
+        'JosefinSans-Regular': require('./assets/fonts/JosefinSans-Regular.ttf'),
+        'JosefinSans-Bold': require('./assets/fonts/JosefinSans-Bold.ttf'),
+        'JosefinSans-SemiBold': require('./assets/fonts/JosefinSans-SemiBold.ttf'),
         'Inter-Medium': require('./assets/fonts/Inter-Medium.ttf'),
         'Inter-SemiBold': require('./assets/fonts/Inter-SemiBold.ttf'),
         'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
@@ -43,10 +46,9 @@ export default function App() {
       // </View>
       <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-
-        <Stack.Screen name="Detail">
-          {(props) => <Detail {...props} />}
+        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+        <Stack.Screen name="Detail" options={({ route }) => ({ title: route.params.data.title})} >
+          {(props) => <Detail {...props}/>}
         </Stack.Screen>
         
       </Stack.Navigator>

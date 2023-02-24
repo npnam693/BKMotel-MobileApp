@@ -10,28 +10,7 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 import RoomItem from '../components/RoomItem'
-
-const formatNameAddress = (name) =>{
-    if (name.substring(0, 9) === 'Thành phố') 
-        return name.substring(10)
-    if (name.substring(0, 4) === 'Tỉnh') 
-        return name.substring(5)
-    return name
-}
-
-const vndFormat = (money) => {
-    money = money.toString()
-    let newMoney = money
-    let index = 0
-    for (let i = money.length - 1; i >= 0; i--){
-        if (index === 2) {
-            newMoney = newMoney.substring(0, i) + '.' +  newMoney.substring(i, newMoney.length)
-            index = 0
-        }
-        else index = index + 1
-    }
-    return newMoney
-}
+import { formatNameAddress, vndFormat } from '../components/RoomItem';
 
 
 
