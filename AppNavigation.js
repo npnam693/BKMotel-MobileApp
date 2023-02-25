@@ -10,7 +10,7 @@ import Detail from './screens/Detail';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import Upload from './screens/Upload';
-
+import Profile from './screens/Profile';
 
 const HomeStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
@@ -33,8 +33,8 @@ function HomeStackScreen({ navigation }) {
 function ProfileStackScreen({ navigation }) {
     return (
         <ProfileStack.Navigator>
-            <ProfileStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            <ProfileStack.Screen name="Signup" component={Signup}/>
+            <ProfileStack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+            {/* <ProfileStack.Screen name="Signup" component={Signup}/> */}
         </ProfileStack.Navigator>
     )
 }
@@ -42,8 +42,7 @@ function UploadStackScreen({ navigation }) {
     return (
         <UploadStack.Navigator>
             <UploadStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            <ProfileStack.Screen name="Signup" component={Signup}/>
-
+            <UploadStack.Screen name="Signup" component={Signup}/>
         </UploadStack.Navigator>
     )
 }
