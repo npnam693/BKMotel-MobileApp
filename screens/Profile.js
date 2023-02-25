@@ -1,7 +1,6 @@
 import { Text, View, StyleSheet, Image } from "react-native"
 import { useSelector } from "react-redux"
 import { loginSucessSelector } from "../redux/selectors"
-import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { Button } from '@rneui/themed';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ScreenWidth } from "@rneui/base";
@@ -13,7 +12,7 @@ import { logout } from "../redux/actions";
 import Login from "./Login"
 
 
-export default function Profile() {
+export default function Profile({ navigation}) {
     const dispatch = useDispatch()
 
     let userData = useSelector(loginSucessSelector)
@@ -21,14 +20,14 @@ export default function Profile() {
     if (userData != null) return (
         <View style = {styles.container}>
             <View style = {styles.infoContainer}>
-                <Image source = {{ uri: 'https://i.pinimg.com/originals/b2/74/b2/b274b2e322ec1042e44e22c013ab911e.png'}}
+                <Image source = {{ uri: userData.data.avatar}}
                     style={{ width: 100, height: 100, borderRadius: 1000, marginRight:12}} 
                 />
                 <View style = {{marginLeft: 15}}>
                     <Text style={{
                         fontSize: 20,
                         fontFamily: 'Inter-SemiBold',
-                    }}> Nguyễn Phi Nam </Text>
+                    }}>{userData.data.name}</Text>
                  
                     <Text style = {{color:"#00a699", marginLeft:6}}>Đã xác minh</Text>
                 </View>
@@ -41,10 +40,9 @@ export default function Profile() {
                 </View>
                 <View style = {styles.countElement}>
                     <Text style = {styles.countTitle}>My Favourite</Text>
-                    <Text style = {[styles.numCount, {color: '#1488db'}]}>24</Text>
+                    <Text style = {[styles.numCount, {color: '#1488db'}]}>{userData.data.favourites.length}</Text>
                 </View>
             </View>
-            
 
             <View >
                 <Button
@@ -64,10 +62,12 @@ export default function Profile() {
                         marginLeft: 10,
                         top: -1
                     }}
-                    icon = {<Ionicons name = 'heart-circle-outline' size={24} color='#00a699' />}
+                    icon = {<Ionicons name = 'heart-circle-outline' size={28} color='#00a699' />}
                     type="outline"
+                    onPress={() => navigation.navigate('Favourite')}
                 />
             </View>
+
             <View style = {{width:ScreenWidth}}>
                 <Button
                     title="My Upload"
@@ -88,15 +88,16 @@ export default function Profile() {
                     }}
                     icon = {<Ionicons name = 'cloud-done' size={24} color='#00a699' />}
                     type="outline"
+                    onPress={() => navigation.navigate('Upload')}
                 />
             </View>
+
             <Button
                 title="Log out"
                 buttonStyle={{
                     width: ScreenWidth,
                     padding: 20,
                     borderColor: '#ccc'
-
                 }}
                 containerStyle={{
                     alignItems: 'flex-start',

@@ -11,6 +11,7 @@ import Login from './screens/Login';
 import Signup from './screens/Signup';
 import Upload from './screens/Upload';
 import Profile from './screens/Profile';
+import Favourite from './screens/Favourite';
 
 const HomeStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
@@ -34,15 +35,13 @@ function ProfileStackScreen({ navigation }) {
     return (
         <ProfileStack.Navigator>
             <ProfileStack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
-            {/* <ProfileStack.Screen name="Signup" component={Signup}/> */}
         </ProfileStack.Navigator>
     )
 }
 function UploadStackScreen({ navigation }) {
     return (
         <UploadStack.Navigator>
-            <UploadStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            <UploadStack.Screen name="Signup" component={Signup}/>
+            <UploadStack.Screen name="Upload" component={Upload} options={{ headerShown: false }}/>
         </UploadStack.Navigator>
     )
 }
@@ -51,13 +50,7 @@ function FavouriteStackScreen({ navigation }) {
     console.log("userData")
     return (
         <FavouriteStack.Navigator>
-            {
-              (userData === null) ?
-              <FavouriteStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-              :
-              <HomeStack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-            }
-            <ProfileStack.Screen name="Signup" component={Signup}/>
+          <ProfileStack.Screen name="Favourite" component={Favourite} options={{ headerShown: false }} />
         </FavouriteStack.Navigator>
     )
 }

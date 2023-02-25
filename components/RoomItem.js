@@ -2,7 +2,7 @@ import {Image, Text, View, StyleSheet, Dimensions} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { ScreenWidth } from '@rneui/base';
-
+import { GetUserData } from '../tools/GetUserData';
 
 export const formatNameAddress = (name) =>{
     if (name.substring(0, 9) === 'Thành phố') 
@@ -14,6 +14,7 @@ export const formatNameAddress = (name) =>{
 
 export const vndFormat = (money) => {
     money = money.toString()
+    const userData = GetUserData()
     let newMoney = money
     let index = 0
     for (let i = money.length - 1; i >= 0; i--){
@@ -25,9 +26,17 @@ export const vndFormat = (money) => {
     }
     return newMoney
 }
+const checkInFavourite = (userData, data) => {
+    for (let i = 0; i < userData.data.favourites.length; i++){
+        if (userData.data.favourites[i]._id === data._id) {
+            console.log(true)
+            return true
+        }
+    }
+}
 
 export default function RoomItem({data}){
-    let liked = true
+    const userData = GetUserData()
     if (data != undefined) 
         return (
             <View style = {{marginBottom: 10, marginTop: 10}}>
@@ -35,18 +44,13 @@ export default function RoomItem({data}){
                     style={{width: 352, height: 300, borderRadius: 20, alignItems:'center', justifyContent: 'center', position: 'relative',}} 
                 />
                 {
-                    liked ? 
+                    userData != null && checkInFavourite(userData, data) ? 
                     <View style ={{position:'absolute', right: 15, top: 15, borderColor: 'white'}}>
                         <Icon name='heart' size = {26} color = '#00a699'/>
                     </View>
                     :
-                    <View>
-                        <View style ={{position:'absolute', right: 15, top: 15, opacity: 0.2, borderColor: 'white'}}>
-                            <Icon name='heart' size = {24} color = 'black' borderColor= 'white'/>
-                        </View>
-                        <View style ={{position:'absolute', right: 15, top: 15, borderColor: 'white'}}>
-                            <Icon name='heart-o' size = {26} color = 'white'/>
-                        </View>
+                    <View style ={{position:'absolute', right: 15, top: 15, borderColor: 'white'}}>
+                        <Icon name='heart-o' size = {26} color = 'white'/>
                     </View>
                 }
                 <View style = {styles.point}>

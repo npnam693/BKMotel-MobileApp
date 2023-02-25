@@ -22,16 +22,11 @@ export default function Home({ navigation }) {
   }, []);
 
   return (
-    // <View style={styles.container}>
-    //   <Text style = {{fontSize: 32, color: '#1488db', fontWeight: '900'}}>BK<Text style = {{fontSize: 32, color: '#00a699', fontWeight: '700'}}>MOTEL</Text></Text>
-    // </View>
-    
     <View style = {styles.container}>
       <View style = {styles.containerSearch}>
         <SearchBar />
       </View>
       <ScrollView >
-        <Text>{userData ? userData.data.email : 'alo'}</Text>
         {
           data.map((room, i) => {
             if (room !== undefined) return (
