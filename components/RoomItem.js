@@ -29,17 +29,29 @@ export const vndFormat = (money) => {
     return newMoney
 }
 
-
 export default function RoomItem({data}){
+    let liked = true
     if (data != undefined) 
         return (
             <View style = {{marginBottom: 10, marginTop: 10}}>
                 <Image source = {{ uri: data.image[0]}}
                     style={{width: 352, height: 352, borderRadius: 20, alignItems:'center', justifyContent: 'center', position: 'relative',}} 
                 />
-                <View style ={{position:'absolute', right: 15, top: 15, opacity: 0.15, borderColor: 'white'}}>
-                    <Icon name='heart' size = {24} color = 'black' borderColor= 'white'/>
-                </View>
+                {
+                    liked ? 
+                    <View style ={{position:'absolute', right: 15, top: 15, borderColor: 'white'}}>
+                        <Icon name='heart' size = {26} color = '#00a699'/>
+                    </View>
+                    :
+                    <View>
+                        <View style ={{position:'absolute', right: 15, top: 15, opacity: 0.2, borderColor: 'white'}}>
+                            <Icon name='heart' size = {24} color = 'black' borderColor= 'white'/>
+                        </View>
+                        <View style ={{position:'absolute', right: 15, top: 15, borderColor: 'white'}}>
+                            <Icon name='heart-o' size = {26} color = 'white'/>
+                        </View>
+                    </View>
+                }
                 <View style = {styles.point}>
                     <Text style = {[styles.fontSize12,{top: -1}]}>{(data.ratingPoint != null) ? data.ratingPoint.$numberDecimal : 0  }</Text> 
                     <Icon name = 'star' size = {14}  color = '#00a699' />
@@ -58,7 +70,6 @@ export default function RoomItem({data}){
                             <View style = {{width: 15, top: 1}}><IconOcticons name = 'home' size = {15}/></View>
                             <Text style = {styles.fontSize12}>{data.area}m2</Text>
                         </View>
-
                     </View>
                 </View>
             </View>

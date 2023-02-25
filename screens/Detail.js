@@ -2,14 +2,10 @@ import {Image, Text, View, ScrollView, StyleSheet, Dimensions, TouchableOpacity}
 import { AirbnbRating } from '@rneui/themed';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { useState } from 'react';
-import axios from 'axios'
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-import RoomItem from '../components/RoomItem'
 import { formatNameAddress, vndFormat } from '../components/RoomItem';
 
 
@@ -18,7 +14,6 @@ import { formatNameAddress, vndFormat } from '../components/RoomItem';
 export default function Detail({ route, navigation }){
     const data = route.params.data
     const [imgPreview, setImgPreview] = useState(data.image[0])
-    // console.log(data.image)
     return (
         <View>
             <ScrollView>
