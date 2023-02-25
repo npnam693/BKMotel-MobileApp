@@ -1,10 +1,7 @@
 import {Image, Text, View, StyleSheet, Dimensions} from 'react-native'
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconOcticons from 'react-native-vector-icons/Octicons';
-
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+import { ScreenWidth } from '@rneui/base';
 
 
 export const formatNameAddress = (name) =>{
@@ -35,7 +32,7 @@ export default function RoomItem({data}){
         return (
             <View style = {{marginBottom: 10, marginTop: 10}}>
                 <Image source = {{ uri: data.image[0]}}
-                    style={{width: 352, height: 352, borderRadius: 20, alignItems:'center', justifyContent: 'center', position: 'relative',}} 
+                    style={{width: 352, height: 300, borderRadius: 20, alignItems:'center', justifyContent: 'center', position: 'relative',}} 
                 />
                 {
                     liked ? 
@@ -67,7 +64,7 @@ export default function RoomItem({data}){
                             <Text style = {styles.fontSize12}>{vndFormat(data.price)} / tháng </Text>
                         </View>
                         <View style = {styles.rowComponent}>
-                            <View style = {{width: 15, top: 1}}><IconOcticons name = 'home' size = {15}/></View>
+                            <View style = {{width: 16, top: 1}}><IconOcticons name = 'home' size = {15}/></View>
                             <Text style = {styles.fontSize12}>{data.area}m2</Text>
                         </View>
                     </View>

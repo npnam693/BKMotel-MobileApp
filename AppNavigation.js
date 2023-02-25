@@ -6,7 +6,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './screens/Home';
 import Detail from './screens/Detail';
 import Login from './screens/Login';
-
+import Signup from './screens/Signup';
+import Upload from './screens/Upload';
 
 
 const HomeStack = createNativeStackNavigator();
@@ -30,6 +31,7 @@ function ProfileStackScreen({ navigation }) {
     return (
         <ProfileStack.Navigator>
             <ProfileStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <ProfileStack.Screen name="Signup" component={Signup}/>
         </ProfileStack.Navigator>
     )
 }
@@ -37,6 +39,8 @@ function UploadStackScreen({ navigation }) {
     return (
         <UploadStack.Navigator>
             <UploadStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <ProfileStack.Screen name="Signup" component={Signup}/>
+
         </UploadStack.Navigator>
     )
 }
@@ -44,6 +48,8 @@ function FavouriteStackScreen({ navigation }) {
     return (
         <FavouriteStack.Navigator>
             <FavouriteStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <ProfileStack.Screen name="Signup" component={Signup}/>
+
         </FavouriteStack.Navigator>
     )
 }

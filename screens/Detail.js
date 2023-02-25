@@ -1,29 +1,36 @@
-import {Image, Text, View, ScrollView, StyleSheet, Dimensions, TouchableOpacity} from 'react-native'
+import { useState, useEffect } from 'react';
+import {Image, Text, View, StyleSheet, Dimensions, TouchableOpacity} from 'react-native'
+
 import { AirbnbRating } from '@rneui/themed';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
-import { useState } from 'react';
+import axios from 'axios';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 import { formatNameAddress, vndFormat } from '../components/RoomItem';
 
-
-
-
 export default function Detail({ route, navigation }){
     const data = route.params.data
     const [imgPreview, setImgPreview] = useState(data.image[0])
+    const [roomData, setRoomData] = useState()
+
+    useEffect(() => {
+      axios.get(`https://bkmotel-api.onrender.com/api/rooms/${data._id}`)
+        .then(res => {
+          setRoomData(res.data)
+        })
+        .catch(err => console.log.apply(err))
+    }, [])
     return (
         <View>
-            <ScrollView>
             <View  style = {styles.imageContainer}>
                 <Image source = {{ uri: imgPreview}}
-                    style={{width: '100%', height: 400, position: 'relative', 
+                    style={{width: '100%', height: 320, position: 'relative', 
                         borderBottomLeftRadius: 16, borderBottomRightRadius: 16}} 
                 />
                 <View style = {styles.quickInfo}>
-                    <View style = {[styles.flexRow, {marginBottom: 8}]}>
+                    <View style = {[styles.flexRow, {marginBottom: 2}]}>
                         <Text style = {{fontSize: 16, fontFamily: 'Inter-Medium', color: '#757d86'}}>{formatNameAddress(data.district)}, {formatNameAddress(data.province)}</Text>
                         <Text style = {{fontSize: 14, fontFamily: 'Inter-Medium', color: 'black'}}>{data.area}m2</Text>
                     </View>
@@ -31,7 +38,7 @@ export default function Detail({ route, navigation }){
                     <View style = {styles.flexRow}>
                         <Text style = {{fontSize: 14, fontFamily: 'Inter-Medium', color: '#1488db'}}>₫ {vndFormat(data.price)}/tháng </Text>
                         <View style = {styles.flexRow}>
-                            <AirbnbRating  isDisabled={true} selectedColor = '#00a699' showRating={false} size = {15} defaultRating ={data.ratingPoint.$numberDecimal}/>
+                            <AirbnbRating  isDisabled={true} selectedColor = '#00a699' showRating={false} size = {12} defaultRating ={data.ratingPoint.$numberDecimal}/>
                             <Text 
                                 style = {{fontSize: 14, fontFamily: 'Inter-Medium', 
                                             color: 'black', marginLeft:4}}
@@ -57,22 +64,6 @@ export default function Detail({ route, navigation }){
                     })}
                 </View>
             </View>
-
-            <View style = {[styles.previewContainer, {marginTop:10}]}>
-                <Text  style = {{
-                    fontSize: 20,
-                    fontFamily: 'Inter-Bold'
-                }}>Biệt Thự Venity Sky</Text>
-                <View style={{ width: screenWidth - 40 }}>
-                    <Text style = {{color: '#666'}}> 
-                        Biệt thự Gương sang trọng và có mọi thứ bạn có thể mong đợi từ một chỗ ở thông minh, 
-                        cao cấp của thế kỷ 21. Nó gây ấn tượng với việc sử dụng các vật liệu hiện đại và đặc 
-                        biệt, hoàn thiện với sự chú ý tối đa đến các chi tiết và chất lượng, công nghệ sáng 
-                        tạo và các thiết bị cao cấp.
-                    </Text>
-                </View>
-            </View>
-
             <View style = {[styles.previewContainer, {marginTop:10}]}>
                 <Text  style = {{
                     fontSize: 16,
@@ -82,35 +73,53 @@ export default function Detail({ route, navigation }){
                 <View style={{flexDirection:'row', width: screenWidth - 40}}>
                     <View style = {styles.contact}>
                         <View style = {{display: 'flex', flexDirection: 'row'}}>
-                            <Image source = {{ uri: 'https://i0.wp.com/lifeasanotaku.com/wp-content/uploads/2022/05/Japanese-Fans-Name-SPY-x-FAMILY-the-TV-Anime-They039re-Most-Excited-for-in-Spring-2022.jpg?fit=1024%2C576&ssl=1'}}
-                                style={{ width: 60, height: 60, borderRadius: 12, marginRight:12}} 
-                            />
-                            <View style = {{alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent:'space-around'}}>
-                                <Text style={{
-                                    fontSize: 16,
-                                    fontFamily: 'Inter-Bold',
-                                    alignItems: 'center'
-                                }}> Nguyễn Phi Nam </Text>
-                                <View style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    flexDirection: 'row',
-                                    width: '100%'
-                                }}>
-                                    <IconAntDesign name = "checkcircleo" color="#00a699" size={14} />
-                                    <Text style = {{color:"#00a699", marginLeft:6}}>Đã xác minh</Text>
-                                </View>
-                                {/* <Text>nam.nguyenphi0693@hcmut.edu.vn</Text>
-                                <Text>0353390693</Text> */}
-                            </View>
+                            {
+                              roomData ? 
+                                <Image source = {{ uri: roomData.rooms.creator.avatar}}
+                                    style={{ width: 60, height: 60, borderRadius: 12, marginRight:12}} 
+                                />
+                              : <View></View>
+
+                            }
+                            
+                            {
+                              roomData ? 
+                                <View style = {{alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent:'space-around'}}>
+                                  <Text style={{
+                                      fontSize: 16,
+                                      fontFamily: 'Inter-Bold',
+                                      alignItems: 'center'
+                                  }}> {roomData.rooms.creator.name} </Text>
+                                  <View style={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      flexDirection: 'row',
+                                      width: '100%'
+                                  }}>
+                                      <IconAntDesign name = "checkcircleo" color="#00a699" size={14} />
+                                      <Text style = {{color:"#00a699", marginLeft:6}}>Đã xác minh</Text>
+                                  </View>
+                                  {/* <Text>nam.nguyenphi0693@hcmut.edu.vn</Text>
+                                  <Text>0353390693</Text> */}
+                               </View>
+                               : <View></View>
+                            }
+
+                            
                         </View>
                     </View>
+                </View>
+                <View style={{ width: screenWidth - 40, marginTop: 10 }}>
+                    <Text style = {{color: '#666'}}> 
+                      {
+                        roomData ? roomData.rooms.description : ''
+                      }
+                    </Text>
                 </View>
             </View>
 
 
-            </ScrollView>
 
         </View>
     )
@@ -125,12 +134,14 @@ const styles = StyleSheet.create({
     quickInfo: {
         borderRadius: 16,
         backgroundColor: 'white',
-        height: 80,
-        width: screenWidth-30,
+        height: 60,
+        width: screenWidth-60,
         position: 'absolute',
         bottom: 15,
-        padding: 16,
-    },
+        padding: 6,
+        paddingLeft: 20,
+        paddingRight: 20,
+      },
     flexRow: {
         display:'flex', 
         flexDirection:'row',

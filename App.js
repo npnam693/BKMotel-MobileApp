@@ -7,6 +7,7 @@ import AppNavigation from './AppNavigation';
 
 
 export default function App() {
+
   const [fontLoaded, setFontLoaded] = useState(false);
 
   useEffect(() => {
@@ -14,13 +15,12 @@ export default function App() {
       await Font.loadAsync({
         'JosefinSans-Medium': require('./assets/fonts/JosefinSans-Medium.ttf'),
         'JosefinSans-Regular': require('./assets/fonts/JosefinSans-Regular.ttf'),
+        'Inter-Regular': require('./assets/fonts/Inter-Regular.ttf'),
         'JosefinSans-Bold': require('./assets/fonts/JosefinSans-Bold.ttf'),
         'JosefinSans-SemiBold': require('./assets/fonts/JosefinSans-SemiBold.ttf'),
-       
         'Inter-Medium': require('./assets/fonts/Inter-Medium.ttf'),
         'Inter-SemiBold': require('./assets/fonts/Inter-SemiBold.ttf'),
         'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
-        'Inter-Regular': require('./assets/fonts/Inter-Regular.ttf')
       });
       setFontLoaded(true);
     };

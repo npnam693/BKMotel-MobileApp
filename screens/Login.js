@@ -1,9 +1,30 @@
 import { Text, View, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 import { Input, CheckBox, Button} from '@rneui/themed';
-import { ScreenHeight, ScreenWidth } from "@rneui/base";
+import { ScreenWidth } from "@rneui/base";
+import axios from "axios";
 
-export default function Login(){
+export default function Login({ navigation }){
+    const [email, setEmail] = useState()
+    const [pass, setPass] = useState()
+    console.log(email, pass)
+
+
+    const handleLoginClick = () => {
+        if (!email || ! pass ) alert("Bạn phải nhập đầy đủ thông tin")
+        else {
+            axios.post("https://bkmotel-api.onrender.com/api/users/login",{ email, pass })
+                .then(response => {
+                    // Xử lý response trả về từ server (nếu có)
+                    console.log(response);
+                })
+                .catch(error => {
+                    // Xử lý lỗi (nếu có)
+                    console.log(error);
+                });
+        }
+    }
+
     return (
         <View style = {styles.container}>
             <View>
@@ -16,7 +37,6 @@ export default function Login(){
                 <Text style = {[styles.BKLogo, styles.welcomeText]}> BK</Text>
                 <Text style = {[styles.MotelLogo, styles.welcomeText]}>Motel</Text>
             .</Text>
-            
             <Input placeholder='Nhập email / Tên đăng nhập' 
                 containerStyle = {{
                     borderRadius: 5,
@@ -33,10 +53,11 @@ export default function Login(){
                     borderBottomColor: 'white',
                 }}
                 inputStyle = {{
-                    color: 'red',
                     fontFamily: 'JosefinSans-Regular',
                     fontSize: 14
                 }}
+                onChangeText = {(inputText) => setEmail(inputText)}
+                value={email}
             />
             
             <Input placeholder='Nhập mật khẩu' 
@@ -54,15 +75,12 @@ export default function Login(){
                 inputContainerStyle = {{
                 }}
                 inputStyle = {{
-                    color: 'red',
                     fontFamily: 'JosefinSans-Regular',
                     fontSize: 14
                 }}
+                onChangeText = {(inputText) => setPass(inputText)}
+                value={pass}
             />
-            
-            
-
-
             <View style = {{flexDirection: 'row', alignItems: 'center', 
                             justifyContent: 'space-between', width: ScreenWidth - 60}}>
                 <Text style={styles.forgetPass}>Quên mật khẩu</Text>
@@ -92,13 +110,12 @@ export default function Login(){
                     backgroundColor: '#00a699',
                     borderRadius: 20,
                     marginBottom: 20,
-              }}
+                }}
+
+                onPress={handleLoginClick }
+
             />
-
-
             <Text>Bạn chưa có tài khoản ?</Text>
-
-
             <Button
               title="Đăng ký tài khoản"
               buttonStyle={{
@@ -113,6 +130,8 @@ export default function Login(){
                 marginHorizontal: 50,
                 marginVertical: 10,
               }}
+              onPress={() => navigation.navigate('Signup')}
+
             />
         </View>
     )
@@ -151,7 +170,5 @@ const styles = StyleSheet.create({
         fontFamily: 'JosefinSans-Regular',
         marignLeft: 0,
     }
-
-
-  });
+});
   
