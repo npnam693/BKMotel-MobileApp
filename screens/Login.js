@@ -3,28 +3,38 @@ import { useState, useEffect } from "react";
 import { Input, CheckBox, Button} from '@rneui/themed';
 import { ScreenWidth } from "@rneui/base";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess } from "../redux/actions";
+import { loginSucessSelector } from "../redux/selectors";
+
+
 
 export default function Login({ navigation }){
     const [email, setEmail] = useState()
-    const [pass, setPass] = useState()
-    console.log(email, pass)
+    const [password, setPassword] = useState()
+    console.log(email, password)
 
+    const dispatch = useDispatch()
 
     const handleLoginClick = () => {
-        if (!email || ! pass ) alert("Bạn phải nhập đầy đủ thông tin")
+        if (!email || ! password ) alert("Bạn phải nhập đầy đủ thông tin")
         else {
-            axios.post("https://bkmotel-api.onrender.com/api/users/login",{ email, pass })
+            axios.post("https://bkmotel-api.onrender.com/api/users/login",{ email, password })
                 .then(response => {
                     // Xử lý response trả về từ server (nếu có)
-                    console.log(response);
+                    // console.log(response);
+                    dispatch(loginSuccess(response))
                 })
                 .catch(error => {
                     // Xử lý lỗi (nếu có)
-                    console.log(error);
+                    alert(error.response.data.message);
                 });
         }
     }
 
+    
+    const testUser = useSelector(loginSucessSelector)
+    console.log(testUser)
     return (
         <View style = {styles.container}>
             <View>
@@ -32,11 +42,11 @@ export default function Login({ navigation }){
                     <Text style = {styles.MotelLogo}>MOTEL</Text>
                 </Text>
             </View>
-
             <Text style = {styles.welcomeText}>Chào mừng bạn đến với 
                 <Text style = {[styles.BKLogo, styles.welcomeText]}> BK</Text>
                 <Text style = {[styles.MotelLogo, styles.welcomeText]}>Motel</Text>
             .</Text>
+            <Text style = {styles.welcomeText}>Hãy đăng nhập để tiếp tục</Text>
             <Input placeholder='Nhập email / Tên đăng nhập' 
                 containerStyle = {{
                     borderRadius: 5,
@@ -44,7 +54,8 @@ export default function Login({ navigation }){
                     // borderColor: 'red',
                     borderWidth: 1,
                     borderColor: '#c4c4c4',
-                    marginBottom: 10
+                    marginBottom: 16,
+                    marginTop: 40,
                 }}
                 errorStyle  = {{
                     display: 'none',
@@ -78,8 +89,8 @@ export default function Login({ navigation }){
                     fontFamily: 'JosefinSans-Regular',
                     fontSize: 14
                 }}
-                onChangeText = {(inputText) => setPass(inputText)}
-                value={pass}
+                onChangeText = {(inputText) => setPassword(inputText)}
+                value={password}
             />
             <View style = {{flexDirection: 'row', alignItems: 'center', 
                             justifyContent: 'space-between', width: ScreenWidth - 60}}>
@@ -157,7 +168,6 @@ const styles = StyleSheet.create({
     welcomeText: {
         fontFamily: 'JosefinSans-Regular',
         fontSize: 16,
-        marginBottom: 30,
     },
     forgetPass: {
         color: '#00a699',

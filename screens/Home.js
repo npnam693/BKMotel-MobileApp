@@ -5,9 +5,11 @@ import RoomItem from '../components/RoomItem';
 import SearchBar from '../components/SearchBar';
 import axios from 'axios'
 import { ScreenWidth } from '@rneui/base';
-
+import { useSelector } from 'react-redux';
+import { loginSucessSelector } from '../redux/selectors';
 export default function Home({ navigation }) {
   const [data, setData] = useState([]);
+  const userData = useSelector(loginSucessSelector)
   
   useEffect(() => {
     axios.get('https://bkmotel-api.onrender.com/api/rooms')
@@ -23,11 +25,13 @@ export default function Home({ navigation }) {
     // <View style={styles.container}>
     //   <Text style = {{fontSize: 32, color: '#1488db', fontWeight: '900'}}>BK<Text style = {{fontSize: 32, color: '#00a699', fontWeight: '700'}}>MOTEL</Text></Text>
     // </View>
+    
     <View style = {styles.container}>
       <View style = {styles.containerSearch}>
         <SearchBar />
       </View>
       <ScrollView >
+        <Text>{userData ? userData.data.email : 'alo'}</Text>
         {
           data.map((room, i) => {
             if (room !== undefined) return (

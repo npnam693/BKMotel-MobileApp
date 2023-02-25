@@ -1,10 +1,10 @@
-import { ScrollView, StyleSheet, Text, View, Image, StatusBar} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 
 import AppNavigation from './AppNavigation';
-
+import store from './redux/store';
+import { Provider } from 'react-redux';
 
 export default function App() {
 
@@ -30,9 +30,11 @@ export default function App() {
 
   
   return (
-      <NavigationContainer>
-        <AppNavigation />
-      </NavigationContainer>
+      <Provider store = {store} >
+        <NavigationContainer>
+          <AppNavigation />
+        </NavigationContainer>
+      </Provider>
   );
 }
 

@@ -1,0 +1,1 @@
+export const loginSucessSelector = (state) => state.user

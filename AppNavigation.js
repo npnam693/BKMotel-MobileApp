@@ -2,6 +2,8 @@ import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
+import { loginSucessSelector } from './redux/selectors';
 
 import Home from './screens/Home';
 import Detail from './screens/Detail';
@@ -14,6 +16,7 @@ const HomeStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
 const UploadStack = createNativeStackNavigator();
 const FavouriteStack = createNativeStackNavigator();
+
 
 
 function HomeStackScreen({ navigation }) {
@@ -45,11 +48,17 @@ function UploadStackScreen({ navigation }) {
     )
 }
 function FavouriteStackScreen({ navigation }) {
+    const userData = useSelector(loginSucessSelector)
+    console.log("userData")
     return (
         <FavouriteStack.Navigator>
-            <FavouriteStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            {
+              (userData === null) ?
+              <FavouriteStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+              :
+              <HomeStack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+            }
             <ProfileStack.Screen name="Signup" component={Signup}/>
-
         </FavouriteStack.Navigator>
     )
 }
@@ -57,6 +66,8 @@ function FavouriteStackScreen({ navigation }) {
 const Tab = createBottomTabNavigator();
 
 export default function AppNavigation() {
+    const userData = useSelector(loginSucessSelector)
+    console.log(userData)
     return (
         <Tab.Navigator
           screenOptions={({ route }) => ({
