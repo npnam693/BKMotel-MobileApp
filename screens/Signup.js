@@ -21,7 +21,6 @@ export default function Signup({ navigation }){
                 containerStyle = {{
                     borderRadius: 5,
                     width: ScreenWidth - 60,
-                    // borderColor: 'red',
                     borderWidth: 1,
                     borderColor: '#c4c4c4',
                     marginBottom: 10
@@ -106,7 +105,6 @@ export default function Signup({ navigation }){
                 containerStyle = {{
                     borderRadius: 5,
                     width: ScreenWidth - 60,
-                    // borderColor: 'red',
                     borderWidth: 1,
                     borderColor: '#c4c4c4',
                     marginBottom: 10
@@ -122,14 +120,13 @@ export default function Signup({ navigation }){
                     fontSize: 14
                 }}
             />
-            
-            
             <Button
               title={'Đăng ký tài khoản'}
               containerStyle={{
                 width: 200,
                 marginHorizontal: 50,
                 marginVertical: 10,
+                
                 }}
                 buttonStyle={{
                     backgroundColor: '#00a699',

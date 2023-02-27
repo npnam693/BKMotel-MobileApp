@@ -18,8 +18,6 @@ const ProfileStack = createNativeStackNavigator();
 const UploadStack = createNativeStackNavigator();
 const FavouriteStack = createNativeStackNavigator();
 
-
-
 function HomeStackScreen({ navigation }) {
     return (
       <HomeStack.Navigator>
@@ -50,7 +48,15 @@ function FavouriteStackScreen({ navigation }) {
     console.log("userData")
     return (
         <FavouriteStack.Navigator>
-          <ProfileStack.Screen name="Favourite" component={Favourite} options={{ headerShown: false }} />
+          {
+            userData != null ? 
+              <ProfileStack.Screen name="Favourite" component={Favourite}/>
+              :
+              <ProfileStack.Screen name="Favourite" component={Favourite} options={{ headerShown: false }} />
+          }
+          <ProfileStack.Screen name="Detail" options={({ route }) => ({ title: route.params.data.title})} >
+          {(props) => <Detail {...props}/>}
+          </ProfileStack.Screen>
         </FavouriteStack.Navigator>
     )
 }
@@ -81,15 +87,15 @@ export default function AppNavigation() {
           )
         }
       >
-            <Tab.Screen name="Home" component={HomeStackScreen}  
+            <Tab.Screen name="Home " component={HomeStackScreen}  
               options={{headerShown: false}}  />
-            <Tab.Screen name="Favourite" component={FavouriteStackScreen} 
+            <Tab.Screen name="Favourite " component={FavouriteStackScreen} 
               options={{headerShown: false}}
             />
-            <Tab.Screen name="Upload" component={UploadStackScreen} 
+            <Tab.Screen name="Upload " component={UploadStackScreen} 
               options={{headerShown: false}}
             />
-            <Tab.Screen name="Profile" component={ProfileStackScreen} 
+            <Tab.Screen name="Profile " component={ProfileStackScreen} 
               options={{headerShown: false}}
             />
         </Tab.Navigator>

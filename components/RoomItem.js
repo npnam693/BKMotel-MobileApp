@@ -18,7 +18,7 @@ export const vndFormat = (money) => {
     let newMoney = money
     let index = 0
     for (let i = money.length - 1; i >= 0; i--){
-        if (index === 2) {
+        if (index === 2 && i != 0) {
             newMoney = newMoney.substring(0, i) + '.' +  newMoney.substring(i, newMoney.length)
             index = 0
         }
@@ -26,7 +26,7 @@ export const vndFormat = (money) => {
     }
     return newMoney
 }
-const checkInFavourite = (userData, data) => {
+export const checkInFavourite = (userData, data) => {
     for (let i = 0; i < userData.data.favourites.length; i++){
         if (userData.data.favourites[i]._id === data._id) {
             console.log(true)
@@ -60,7 +60,7 @@ export default function RoomItem({data}){
                 <View style = {{ margin: 20, marginBottom: 0, marginTop: 4}}>    
                     <View style = {styles.header}>
                         <Text style = {styles.locationP}>{formatNameAddress(data.district)}, {formatNameAddress(data.province)}</Text>
-                        <Text style = {styles.titleRoom}>{data.title}</Text>
+                        <Text style = {styles.titleRoom} numberOfLines = {1}>{data.title}</Text>
                     </View>
                     <View style = {[styles.rowComponent,{justifyContent:'space-between'}]}>
                         <View style = {styles.rowComponent}>
