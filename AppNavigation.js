@@ -45,14 +45,13 @@ function UploadStackScreen({ navigation }) {
 }
 function FavouriteStackScreen({ navigation }) {
     const userData = useSelector(loginSucessSelector)
-    console.log("userData")
     return (
         <FavouriteStack.Navigator>
           {
             userData != null ? 
-              <ProfileStack.Screen name="Favourite" component={Favourite}/>
-              :
-              <ProfileStack.Screen name="Favourite" component={Favourite} options={{ headerShown: false }} />
+            <ProfileStack.Screen name="Favourite" component={Favourite}  />
+            :
+            <ProfileStack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
           }
           <ProfileStack.Screen name="Detail" options={({ route }) => ({ title: route.params.data.title})} >
           {(props) => <Detail {...props}/>}
@@ -65,7 +64,6 @@ const Tab = createBottomTabNavigator();
 
 export default function AppNavigation() {
     const userData = useSelector(loginSucessSelector)
-    console.log(userData)
     return (
         <Tab.Navigator
           screenOptions={({ route }) => ({

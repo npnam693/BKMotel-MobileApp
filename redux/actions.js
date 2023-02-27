@@ -6,3 +6,8 @@ export const loginSuccess = (user) => ({
 export const logout = () => ({
     type: 'LOGOUT',
 });
+
+export const addFavourite = (favourites) => ({
+    type: 'ADD_FAVOURITE',
+    payload: favourites,
+})

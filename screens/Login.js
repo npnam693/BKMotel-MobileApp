@@ -12,7 +12,6 @@ import { loginSucessSelector } from "../redux/selectors";
 export default function Login({ navigation }){
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-    console.log(email, password)
 
     const dispatch = useDispatch()
 
@@ -22,7 +21,6 @@ export default function Login({ navigation }){
             axios.post("https://bkmotel-api.onrender.com/api/users/login",{ email, password })
                 .then(response => {
                     // Xử lý response trả về từ server (nếu có)
-                    // console.log(response);
                     dispatch(loginSuccess(response))
                 })
                 .catch(error => {
@@ -34,7 +32,6 @@ export default function Login({ navigation }){
 
     
     const testUser = useSelector(loginSucessSelector)
-    console.log(testUser)
     return (
         <View style = {styles.container}>
             <View>
