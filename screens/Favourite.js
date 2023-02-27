@@ -9,6 +9,8 @@ import axios from "axios";
 import { checkInFavourite } from "../components/RoomItem";
 import { formatNameAddress, vndFormat } from "../components/RoomItem";
 
+
+
 export default function Favourite({ navigation }){
     const dispatch = useDispatch()
     
@@ -64,18 +66,13 @@ export default function Favourite({ navigation }){
                                     }}>{vndFormat(room.price)}đ</Text>
                                 </View>
                             </View> 
-                            {
-                            checkInFavourite(userData, room) ? 
                             <TouchableOpacity onPress={() => handleClickLike(room)}>
-                                <View style ={{position:'absolute', right: 15, bottom: 15, borderColor: 'white'}}>
-                                    <Icon name='heart' size = {20} color = '#00a699'/>
+                                <View style ={{position:'absolute', right: 15, bottom: 15, 
+                                    padding: 6, backgroundColor: "#00a699", borderRadius: 6
+                                }}>
+                                    <Text>Unlike</Text>
                                 </View>
                             </TouchableOpacity>
-                            :
-                            <View style ={{position:'absolute', right: 15, top: 15, borderColor: 'white'}}>
-                                <Icon name='heart-o' size = {20} color = 'white'/>
-                            </View>
-                            }
                         </View>
                     </TouchableOpacity>
                 ))

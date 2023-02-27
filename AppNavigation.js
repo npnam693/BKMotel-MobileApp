@@ -70,12 +70,12 @@ export default function AppNavigation() {
             tabBarIcon: ({ focused, color, size }) => {
               let iconName 
               size = 24
-              if (route.name === "Home") iconName = "home"
-              else if (route.name === "Favourite") {
+              if (route.name === "HomeTab") iconName = "home"
+              else if (route.name === "FavouriteTab") {
                 iconName = "heart-circle-outline"
                 size = 27
               }
-              else if (route.name === "Upload") iconName = "cloud-upload"
+              else if (route.name === "UploadTab") iconName = "cloud-upload"
               else iconName = 'people-sharp'
               return <Ionicons name = {iconName} size={size} color={color} />
             },
@@ -85,16 +85,16 @@ export default function AppNavigation() {
           )
         }
       >
-            <Tab.Screen name="Home " component={HomeStackScreen}  
-              options={{headerShown: false}}  />
-            <Tab.Screen name="Favourite " component={FavouriteStackScreen} 
-              options={{headerShown: false}}
+            <Tab.Screen name="HomeTab" component={HomeStackScreen}  
+              options={{headerShown: false, tabBarShowLabel: false}}  />
+            <Tab.Screen name="FavouriteTab" component={FavouriteStackScreen} 
+              options={{headerShown: false, tabBarShowLabel: false}}
             />
-            <Tab.Screen name="Upload " component={UploadStackScreen} 
-              options={{headerShown: false}}
+            <Tab.Screen name="UploadTab" component={UploadStackScreen} 
+              options={{headerShown: false, tabBarShowLabel: false}}
             />
-            <Tab.Screen name="Profile " component={ProfileStackScreen} 
-              options={{headerShown: false}}
+            <Tab.Screen name="ProfileTab" component={ProfileStackScreen} 
+              options={{headerShown: false, tabBarShowLabel: false}}
             />
         </Tab.Navigator>
     )
