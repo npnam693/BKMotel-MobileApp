@@ -3,14 +3,33 @@ import { useState, useEffect } from "react";
 import { GetUserData } from "../tools/GetUserData";
 import { ScreenWidth } from "@rneui/base";
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import axios from "axios";
 
 
 import Login from "./Login";
 import { checkInFavourite } from "../components/RoomItem";
 import { formatNameAddress, vndFormat } from "../components/RoomItem";
 export default function Favourite({ navigation }){
-    let userData = GetUserData()
+    const [userData, setUserData] = useState(GetUserData())
+
+    const config = userData ? {
+        headers: {
+            Authorization: `Bearer ${userData.token}`
+        }
+    } : {}
+
+    const handleClickLike = (data) => {
+        axios.put('/https://bkmotel-api.onrender.com/api/rooms/favourites/add', {
+            roomId: data._id
+        }, config)
+            .then(response => {
+                setUserFavourites(response.data.favourites)
+            })
+            .catch(err => {
+                alert(err.response.data.message)
+            })
+    } 
+
     if (userData != null) {
         return (
             <View style = {styles.container}>
@@ -45,18 +64,18 @@ export default function Favourite({ navigation }){
                                 </View> 
                                 {
                                 checkInFavourite(userData, room) ? 
-                                <View style ={{position:'absolute', right: 15, bottom: 15, borderColor: 'white'}}>
-                                    <Icon name='heart' size = {20} color = '#00a699'/>
-                                </View>
+                                <TouchableOpacity onPress={() => handleClickLike(room)}>
+                                    <View style ={{position:'absolute', right: 15, bottom: 15, borderColor: 'white'}}>
+                                        <Icon name='heart' size = {20} color = '#00a699'/>
+                                    </View>
+                                </TouchableOpacity>
                                 :
                                 <View style ={{position:'absolute', right: 15, top: 15, borderColor: 'white'}}>
                                     <Icon name='heart-o' size = {20} color = 'white'/>
                                 </View>
                                 }
                             </View>
-                            
                         </TouchableOpacity>
-                        
                     ))
                 }
  
